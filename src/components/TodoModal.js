@@ -1,14 +1,27 @@
 import React, { useState } from "react";
 import styles from '../styles/modules/modal.module.scss';
 import { MdOutlineClose } from 'react-icons/md';
+import { useDispatch } from "react-redux";
 import Button from "./Button";
+import { addTodo } from "../slices/todoSlice"; 
+import { v4 as uuid } from "uuid";
 function TodoModal({modalOpen, setModalOpen}){
     const [title, setTitle ] = useState('');
     const [status, setStatus ] = useState('incomplete');
+    const dispatch = useDispatch();
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log({title,status})
-    }
+
+        if(title && status){
+            dispapach(addTodo({
+                id: uuid(),
+                title,
+                status,
+                time: new Date().toLocaleDateString(),
+            })
+            );
+        }
+    };
   return(
    modalOpen && (
     <div className={styles.wrapper}>
